@@ -1,0 +1,249 @@
+@use "sass:math";
+@import 'datepicker-config';
+
+.datepicker--cells {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0;
+  margin: 0 6% 4% 7%;
+  overflow: hidden;
+}
+
+.datepicker--cell {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  float: left;
+  color: rgba(31, 32, 65, 0.5);
+
+  &.-focus- {
+    &:before {
+      content: '';
+      width: 100%;
+      padding: 50% 0;
+      border-radius: 50%;
+      background: rgba(31, 32, 65, 0.05);
+      position: absolute;
+      z-index: -1;
+    }
+  }
+
+  &.-current- {
+    color: #fff;
+
+    &:before {
+      content: '';
+      width: 100%;
+      padding: 50% 0;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #6fcf97 0%, #66d2ea 100%);
+      position: absolute;
+      z-index: -1;
+    }
+
+    &.-other-month- {
+      color: rgba(31, 32, 65, 1);
+    }
+
+    &.-in-range- {
+      &:before {
+        border-radius: 0;
+      }
+    }
+  }
+
+  &.-in-range- {
+    color: rgba(31, 32, 65, 0.5);
+    border-radius: 0;
+
+    &:before {
+      content: '';
+      width: 100%;
+      padding: 50% 0;
+      border-radius: 0;
+      background: linear-gradient(180deg, #eee6ff 0%, #e6eafe 100%);
+      position: absolute;
+      z-index: -1;
+    }
+  }
+
+  &.-disabled- {
+    cursor: default;
+  }
+
+  &.-range-from-,
+  &.-range-to- {
+    color: #fff;
+
+    &:before,
+    &:after {
+      content: '';
+      width: 100%;
+      padding: 50% 0;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+      position: absolute;
+      z-index: -1;
+    }
+
+    &:after {
+      background: linear-gradient(180deg, #eee6ff 0%, #e6eafe 100%);
+      z-index: -2;
+    }
+  }
+
+  &.-range-from- {
+    &:after {
+      border-radius: 50% 0 0 50%;
+    }
+  }
+  &.-range-to- {
+    &:after {
+      border-radius: 0 50% 50% 0;
+    }
+  }
+
+  &.-selected- {
+    color: #fff;
+    border: none;
+
+    &.-current- {
+      color: #fff;
+    }
+  }
+
+  &:empty {
+    cursor: default;
+  }
+}
+
+.datepicker--days-names {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 20px;
+  font-weight: 500;
+}
+
+.datepicker--day-name {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  width: 14.28%;
+  height: 40px;
+  color: #bc9cff;
+  text-transform: none;
+  justify-content: center;
+}
+
+.datepicker--cell-day {
+  width: 14.28%;
+  border-radius: 50%;
+  padding: 2.81%;
+
+  &.-other-month- {
+    @extend %otherMonth;
+    color: rgba(31, 32, 65, 0.25);
+  }
+
+  &.-range-from- {
+    &:before {
+      content: '';
+      width: 100%;
+      padding: 50% 0;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+      position: absolute;
+      z-index: -1;
+    }
+  }
+}
+
+.datepicker--cells-months {
+  height: $datepickerMinBodyHeight;
+}
+
+.datepicker--cell-month {
+  width: 33.33%;
+
+  &.-focus-:before {
+    border-radius: 0;
+    padding: 22.8% 0;
+  }
+
+  &.-range-from-,
+  &.-range-to-,
+  &.-in-range- {
+    &:before,
+    &:after {
+      padding: 22.8% 0;
+    }
+  }
+
+  &.-range-from-:before {
+    border-radius: 0.1vw 0 0 0.1vw;
+  }
+
+  &.-range-to-:before {
+    border-radius: 0 0.1vw 0.1vw 0;
+  }
+
+  &.-current- {
+    &:before {
+      border-radius: 0.1vw;
+      padding: 22.8% 0;
+    }
+  }
+}
+
+.datepicker--years {
+  height: $datepickerMinBodyHeight;
+}
+
+.datepicker--cells-years {
+  height: $datepickerMinBodyHeight;
+}
+
+.datepicker--cell-year {
+  width: math.div(100%, $datepickerYearsPerRow);
+  height: 33.33%;
+
+  &.-focus-:before {
+    border-radius: 0;
+    padding: 41% 0;
+  }
+
+  &.-other-decade- {
+    @extend %otherMonth;
+  }
+
+  &.-range-from-,
+  &.-range-to-,
+  &.-in-range- {
+    &:before,
+    &:after {
+      padding: 41% 0;
+    }
+  }
+
+  &.-range-from-:before {
+    border-radius: 0.1vw 0 0 0.1vw;
+  }
+
+  &.-range-to-:before {
+    border-radius: 0 0.1vw 0.1vw 0;
+  }
+
+  &.-current- {
+    &:before {
+      border-radius: 0.1vw;
+      padding: 41% 0;
+    }
+  }
+}
