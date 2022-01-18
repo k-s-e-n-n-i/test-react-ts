@@ -2,6 +2,8 @@ import React from 'react';
 import './input-text.scss';
 import TopicLabel from '../../components/topic-label/topic-label';
 
+import { runInputsDate } from './input-text.instances';
+
 type Props = {
   id: string;
   topic: string;
@@ -58,6 +60,10 @@ class InputText extends React.Component<Props> {
         ></input>
       </div>
     );
+  }
+
+  componentDidMount() {
+    runInputsDate();
   }
 }
 
