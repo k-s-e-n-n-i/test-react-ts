@@ -4,6 +4,8 @@ import Button from '../../components/button/button';
 import Dropdown from '../../components/dropdown/dropdown';
 import DropdownDates from '../../components/dropdown-dates/dropdown-dates';
 
+import { runFormSearchRoom } from './form-search-num.instances';
+
 type Props = {
   action: string;
   text: string;
@@ -88,6 +90,10 @@ class FormSearchRoom extends React.Component<Props> {
         </div>
       </form>
     );
+  }
+
+  componentDidMount() {
+    runFormSearchRoom();
   }
 }
 
