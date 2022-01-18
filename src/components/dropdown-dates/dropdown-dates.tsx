@@ -2,6 +2,8 @@ import React from 'react';
 import './dropdown-dates.scss';
 import Calendar from '../../components/calendar/calendar';
 
+import { runCalendar } from '../calendar/calendar.instances';
+
 type Props = {
   data: ItemDropdown[];
 };
@@ -48,6 +50,10 @@ class DropdownDates extends React.Component<Props> {
         <Calendar classWrapper="dropdown-dates__calendar" open={true} />
       </div>
     );
+  }
+
+  componentDidMount() {
+    //runCalendar();
   }
 }
 
