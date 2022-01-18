@@ -1,6 +1,9 @@
 import React from 'react';
 import './header.scss';
+import { runHeader } from './header.instances';
+
 import logo from './img/logo.svg';
+
 import Btn from '../../components/button/button';
 
 type Props = {
@@ -74,6 +77,7 @@ class Header extends React.Component<Props> {
       </li>
     ));
   }
+
   render() {
     let {
       data: { menuItems, authorization, userName },
@@ -113,6 +117,10 @@ class Header extends React.Component<Props> {
         </div>
       </header>
     );
+  }
+
+  componentDidMount() {
+    runHeader();
   }
 }
 
