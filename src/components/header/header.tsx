@@ -1,13 +1,15 @@
 import React from 'react';
 import './header.scss';
-import { runHeader } from './header.instances';
+
+import { getElementBySelector } from '../../modules/functions/getElementBySelector.function';
 
 import logo from './img/logo.svg';
 
-import Btn from '../../components/button/button';
+import Btn from '../button/button';
+import MenuExpand from '../MenuExpand/MenuExpand';
 
 type Props = {
-  id?: string;
+  id: string;
   menuItems?: Menu[];
   authorization?: boolean;
   userName?: string;
@@ -35,12 +37,15 @@ class Header extends React.Component<Props> {
   };
 
   data: Props;
+  myRef: React.RefObject<HTMLHeadingElement>;
   btnLogin: Button;
   btnRegistr: Button;
 
   constructor(props: Props) {
     super(props);
     this.data = this.props;
+    this.myRef = React.createRef();
+
     this.btnLogin = {
       height: 'narrow',
       text: 'Войти',
@@ -51,31 +56,26 @@ class Header extends React.Component<Props> {
       text: 'Зарегистрироваться',
     };
   }
+
   printMenu(items: Menu[]) {
-    return items.map((item: Menu, index) => (
-      <li
-        className={
-          'header__menu-li ' +
-          (item.state === 'active' ? 'header__menu-li_active' : '') +
-          (item.type === 'expand' ? 'header__menu-li_expand js-header__menu-li_expand' : '')
-        }
-        key={`${this.data.id}menu${index}`}
-      >
-        <a className="header__menu-a" href={item.link}>
-          {item.menuItem}
-        </a>
-        {item.submenu && <ul className="header__submenu">{this.submenu(item.submenu)}</ul>}
-      </li>
-    ));
-  }
-  submenu(sbm: Menu[]) {
-    return sbm.map((sbmItem: Menu, index: number) => (
-      <li className="header__submenu-li" key={`${this.data.id}submenu${index}`}>
-        <a className="header__submenu-a" href={sbmItem.link}>
-          {sbmItem.menuItem}
-        </a>
-      </li>
-    ));
+    return items.map((item: Menu, index) =>
+      item.type === 'expand' ? (
+        <MenuExpand item={item} key={`${this.data.id}menu${index}`} />
+      ) : (
+        <li
+          className={
+            'header__menu-li ' +
+            (item.state === 'active' ? 'header__menu-li_active' : '') +
+            (item.type === 'expand' ? 'header__menu-li_expand js-header__menu-li_expand' : '')
+          }
+          key={`${this.data.id}menu${index}`}
+        >
+          <a className="header__menu-a" href={item.link}>
+            {item.menuItem}
+          </a>
+        </li>
+      )
+    );
   }
 
   render() {
@@ -86,7 +86,7 @@ class Header extends React.Component<Props> {
     } = this;
 
     return (
-      <header className="header">
+      <header className="header" ref={this.myRef}>
         <div className="header__content-container">
           <a className="header__logo-link" href="./landing-page.html">
             <img className="header__logo" src={logo} alt="logo" />
@@ -120,7 +120,26 @@ class Header extends React.Component<Props> {
   }
 
   componentDidMount() {
-    runHeader();
+    const header = this.myRef.current;
+
+    if (header) {
+      this.initMenuMobile(header);
+    }
+  }
+
+  initMenuMobile(header: HTMLElement) {
+    const menuMobile = getElementBySelector(header, '.js-header__menu-mobile');
+    const headerNav = getElementBySelector(header, '.header__links');
+
+    menuMobile.addEventListener('click', () => {
+      this.handleMenuMobileClick(menuMobile, headerNav);
+    });
+  }
+
+  handleMenuMobileClick(menuMobile: HTMLElement, headerNav: HTMLElement): void {
+    headerNav.classList.toggle('header__links_mobile');
+    headerNav.classList.toggle('header__links_hidden');
+    menuMobile.classList.toggle('header__menu-mobile_cross');
   }
 }
 
