@@ -13,6 +13,7 @@ interface Options {
 interface Items {
   text: string;
   number: number;
+  name: string;
   countAdditionally: boolean;
   wordsForm: string[];
 }
@@ -36,6 +37,7 @@ class Dropdown {
   numbers: number[] = [];
   records: NodeListOf<Element> | null = null;
   numbersElements: NodeListOf<Element> | null = null;
+  numbersInputElements: NodeListOf<Element> | null = null;
   buttonClean: HTMLElement | null = null;
   buttonOk: HTMLElement | null = null;
 
@@ -121,6 +123,7 @@ class Dropdown {
       this.decrementElements = dropdown.querySelectorAll('.dropdown__number-change_decremented');
       this.records = dropdown.querySelectorAll('.dropdown__record-name');
       this.numbersElements = dropdown.querySelectorAll('.dropdown__number');
+      this.numbersInputElements = dropdown.querySelectorAll('.dropdown__number-input');
 
       if (hasButtons) {
         this.buttonClean = getElementBySelector(dropdown, '.js-dropdown__btns .dropdown__btn-link_clean');
@@ -149,6 +152,12 @@ class Dropdown {
     number.className = 'dropdown__number';
     number.innerHTML = `${item.number}`;
 
+    const numberInput = document.createElement('input');
+    numberInput.className = 'dropdown__number-input';
+    numberInput.setAttribute('name', `${item.name}`);
+    numberInput.setAttribute('type', 'text');
+    numberInput.setAttribute('value', '0');
+
     const plus = document.createElement('div');
     plus.className =
       'dropdown__number-change dropdown__number-change_incremented js-dropdown__number-change_incremented';
@@ -156,6 +165,7 @@ class Dropdown {
 
     changeBlock.append(minus);
     changeBlock.append(number);
+    changeBlock.append(numberInput);
     changeBlock.append(plus);
 
     line.append(name);
@@ -208,10 +218,11 @@ class Dropdown {
   }
 
   updateNumbers(): void {
-    const { numbersElements, numbers } = this;
-    if (numbersElements) {
+    const { numbersElements, numbersInputElements, numbers } = this;
+    if (numbersElements && numbersInputElements) {
       numbers.forEach((num, i) => {
         numbersElements[i].innerHTML = num.toString();
+        numbersInputElements[i].setAttribute('value', num.toString());
       });
     }
   }
