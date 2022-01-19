@@ -6,7 +6,7 @@ import { getElementBySelector } from '../../modules/functions/getElementBySelect
 import logo from './img/logo.svg';
 
 import Btn from '../button/button';
-import MenuExpand from '../MenuExpand/MenuExpand';
+import MenuLiExpand from '../MenuLiExpand/MenuLiExpand';
 
 type Props = {
   id: string;
@@ -60,7 +60,7 @@ class Header extends React.Component<Props> {
   printMenu(items: Menu[]) {
     return items.map((item: Menu, index) =>
       item.type === 'expand' ? (
-        <MenuExpand item={item} key={`${this.data.id}menu${index}`} />
+        <MenuLiExpand item={item} key={`${this.data.id}menu${index}`} />
       ) : (
         <li
           className={

@@ -11,7 +11,7 @@ type Menu = {
   submenu?: Menu[];
 };
 
-class MenuExpand extends React.Component<Props> {
+class MenuLiExpand extends React.Component<Props> {
   static defaultProps = {
     item: {},
   };
@@ -103,4 +103,4 @@ class MenuExpand extends React.Component<Props> {
   }
 }
 
-export default MenuExpand;
+export default MenuLiExpand;
