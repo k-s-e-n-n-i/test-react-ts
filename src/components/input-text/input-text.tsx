@@ -1,8 +1,8 @@
 import React from 'react';
+import Cleave from 'cleave.js';
+
 import './input-text.scss';
 import TopicLabel from '../../components/topic-label/topic-label';
-
-import { runInputsDate } from './input-text.instances';
 
 type Props = {
   id: string;
@@ -27,10 +27,12 @@ class InputText extends React.Component<Props> {
   };
 
   data: Props;
+  myRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
     this.data = this.props;
+    this.myRef = React.createRef();
   }
 
   checkSubscription(type: string) {
@@ -57,13 +59,26 @@ class InputText extends React.Component<Props> {
           placeholder={placeholder}
           id={`inputText${id}`}
           defaultValue={inputText}
+          ref={this.myRef}
         ></input>
       </div>
     );
   }
 
   componentDidMount() {
-    runInputsDate();
+    const inputDate = this.myRef.current;
+
+    if (inputDate?.classList.contains('.input-text__input_date')) {
+      this.runInputsDate();
+    }
+  }
+
+  runInputsDate() {
+    new Cleave('.input-text__input_date', {
+      date: true,
+      delimiter: '.',
+      datePattern: ['d', 'm', 'Y'],
+    });
   }
 }
 
