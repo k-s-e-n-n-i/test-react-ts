@@ -28,7 +28,7 @@ class RequestsFormSearchRoom {
             babies: formSearchRoom.babies.value,
           },
         };
-
+        console.log(`Отправлены данные:${JSON.stringify(postJSON)}`);
         socket.send(JSON.stringify(postJSON));
         return false;
       };
