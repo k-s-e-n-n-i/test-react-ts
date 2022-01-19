@@ -1,13 +1,13 @@
 import React from 'react';
 import './form-search-room.scss';
-import Button from '../../components/button/button';
-import Dropdown from '../../components/dropdown/dropdown';
-import DropdownDates from '../../components/dropdown-dates/dropdown-dates';
 
-import { runFormSearchRoom } from './form-search-num.instances';
+import ButtonSubmit from '../ButtonSubmit/ButtonSubmit';
+import Dropdown from '../dropdown/dropdown';
+import DropdownDates from '../dropdown-dates/dropdown-dates';
+
+import { createdDropdowGuests } from './form-search-room.instances';
 
 type Props = {
-  action: string;
   text: string;
   type: string;
   classBlock: string;
@@ -15,7 +15,6 @@ type Props = {
 
 class FormSearchRoom extends React.Component<Props> {
   static defaultProps = {
-    action: './link-stub',
     text: 'Ссылка',
     type: '',
     classBlock: '',
@@ -24,6 +23,7 @@ class FormSearchRoom extends React.Component<Props> {
   data: Props;
   button: {
     text: string;
+    arrow: boolean;
   };
   guests: {
     topic: string;
@@ -42,6 +42,7 @@ class FormSearchRoom extends React.Component<Props> {
     this.data = this.props;
     this.button = {
       text: 'подобрать номер',
+      arrow: true,
     };
     this.guests = {
       topic: 'Гости',
@@ -71,29 +72,23 @@ class FormSearchRoom extends React.Component<Props> {
   }
 
   render() {
-    let {
-      data: { action },
-      button,
-      guests,
-      fieldsDates,
-    } = this;
+    let { button, guests, fieldsDates } = this;
 
     return (
-      <form className="form-search-room" action={action}>
+      <form className="form-search-room" name="formSearchRoom">
         <h1 className="form-search-room__topic">Найдём номера под ваши пожелания</h1>
         <div className="form-search-room__dropdown-dates">
           <DropdownDates data={fieldsDates} />
         </div>
         <Dropdown topic={guests.topic} id={guests.id} items={guests.items} />
         <div className="form-search-room__button">
-          <Button text={button.text} />
+          <ButtonSubmit text={button.text} />
         </div>
       </form>
     );
   }
 
   componentDidMount() {
-    runFormSearchRoom();
   }
 }
 
