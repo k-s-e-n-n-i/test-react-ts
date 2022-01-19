@@ -6,6 +6,7 @@ import Dropdown from '../dropdown/dropdown';
 import DropdownDates from '../dropdown-dates/dropdown-dates';
 
 import { createdDropdowGuests } from './form-search-room.instances';
+import { RequestsFormSearchRoom } from './form-search-room.requests';
 
 type Props = {
   text: string;
@@ -89,6 +90,10 @@ class FormSearchRoom extends React.Component<Props> {
   }
 
   componentDidMount() {
+    createdDropdowGuests(this.guests.id);
+
+    const socket = new RequestsFormSearchRoom();
+    socket.socketsGO();
   }
 }
 
