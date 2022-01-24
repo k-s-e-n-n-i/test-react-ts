@@ -13,7 +13,7 @@ class StartPage extends React.Component {
           <div className="start-page__links">
             <Link classBlock="start-page__link" text="landing page" url={`/landing-page.html`} />
             <Link classBlock="start-page__link" text="registration" url={`/landing-page.html`} />
-            <Link classBlock="start-page__link" text="sing in" />
+            <Link classBlock="start-page__link" text="sing in" url={`/landing-page.html`} />
             <Link classBlock="start-page__link" text="search room" />
           </div>
         </div>
